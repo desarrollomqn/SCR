@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition template="./../template.xhtml">
+
+        <ui:define name="content">
+            <div class="main">
+                <div class="main-inner">
+                    <b:container fluid="false" >
+
+                        <div style="margin-bottom: 30px">
+                            <h2> Departamentos <small>puedes registrar, consultar, modificar y 
+                                    eliminar los registros de los departamentos que desees.</small> </h2>
+                        </div>
+                        <b:row>
+
+                            <b:column col-lg="6" >
+
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-ol"></i>
+                                        <h3> Registro de Departamentos </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioRegistro">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label for="inputDepartamento" class="col-sm-4 control-label">Departamento: </label>
+                                                            <b:inputText value="#{departamentoCT.departamento.nombre}" id="inputDepartamento" placeholder="Nombre del departamento" span="8"/>                                                             
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <b:commandButton value="Enviar" update=":formularioRegistro :formularioLista" action="#{departamentoCT.registrar()}" class="btn btn-info " style="float: right">
+                                                                <b:iconAwesome name="send"></b:iconAwesome>
+                                                            </b:commandButton>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                                <!-- /widget-content --> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                            <!-- /widget -->
+
+                            <b:column col-lg="4" style="float: right" >
+                                <div class="widget widget-nopad">
+                                    <div class="widget-header"> <i class="fa fa-area-chart"></i>
+                                        <h3> Grafica 1</h3>
+                                    </div>
+
+                                    <div class="widget-content">
+                                        <h:form>
+                                            <b:image value="./../resources/images/Imagen1.jpg" 
+                                                     style="margin-bottom: 31px" 
+                                                     tooltip="Grafica de Estado " 
+                                                     class="img-responsive" />
+                                        </h:form>
+                                    </div>
+
+                                </div>                                
+                            </b:column>
+                            <!-- /widget -->
+
+                            <b:column col-lg="12" >
+
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3> Listado de Departamentos </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioLista">
+                                                    <b:dataTable value="#{departamentoCT.departamentos}" var="departamento">
+                                                        <b:dataTableColumn label="Nombre">
+                                                            <h:outputLabel value="#{departamento.nombre}" />
+                                                        </b:dataTableColumn> 
+                                                        <b:dataTableColumn label="">
+
+                                                        </b:dataTableColumn>
+
+                                                    </b:dataTable>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                        <!-- /widget-content --> 
+                                    </div>
+                                </div>
+
+                            </b:column>
+
+                        </b:row>
+
+                        <!-- /row --> 
+
+                        <!-- /container --> 
+                    </b:container>
+
+                </div>
+                <!-- /main-inner --> 
+            </div>
+            <!-- /main -->    
+        </ui:define>
+
+    </ui:composition>
+
+</html>

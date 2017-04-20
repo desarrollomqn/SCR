@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="./template.xhtml">
+
+        <ui:define name="content">
+
+            <div class="main">
+                <div class="main-inner">
+                    <b:container fluid="false" >
+                        <b:row>
+
+                            <b:column col-lg="4" class="pull-right" >
+
+                                <div class="widget widget-dolarhoy">
+                                    <div class="widget-header"><h3><i class="fa fa-usd"></i>Dólar Hoy</h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                                <p>#{trmCT.trmd} COP</p>
+                                            <!-- /widget-content --> 
+                                    </div>
+                                </div>
+                            </b:column>
+
+                            <b:column col-lg="8" >
+
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3> Listado de Contratos </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <b:dataTable value="#{carPool.carPool}" var="car">
+                                                    <b:dataTableColumn label="col num 1"/>
+                                                    <b:dataTableColumn label="col num 2"/>
+                                                    <b:dataTableColumn label="col num 3"/>
+                                                    <b:dataTableColumn label="col num 4"/>
+                                                    <b:dataTableColumn label="col num 5"/>
+
+                                                </b:dataTable>
+                                            </div>
+                                            <!-- /widget-content --> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                            <!-- /widget --> 
+                            <b:column col-lg="4" >
+                                <div class="widget">
+                                    <div class="widget-header"> <i class="fa fa-area-chart"></i>
+                                        <h3>Grafica</h3>
+                                    </div>
+
+                                    <div class="widget-content">
+                                        <ul class="messages_layout">
+                                            <h:form>
+                                                <h:panelGrid columns="1" columnClasses="left,right" style="width:100%">
+
+                                                    <p:chart type="bar" model="#{chartView.animatedModel2}" style="width:330px;" />
+                                                </h:panelGrid>
+                                            </h:form>
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </b:column>
+
+                            <b:column col-lg="4" >
+                                <div class="widget">
+                                    <div class="widget-header"> <i class="fa fa-file"></i>
+                                        <h3> Descripción de Tabla</h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <ul class="messages_layout">
+                                            <h:form>
+                                                <b:tabView contentStyle="border-right: 1px solid #ddd;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding:10px">
+
+                                                    <b:tab title="Cambio UVR">
+                                                        <h4 class="">Descripcion de UVR</h4>
+                                                        Lorem ipsum dolor sit amet, consectetur 
+                                                        adipisicing elit. Officia explicabo facilis, 
+                                                        adipisci recusandae est impedit fuga eveniet 
+                                                        iusto aut excepturi quibusdam, omnis totam 
+                                                        similique quod repudiandae eaque soluta ipsa accusamus.
+                                                    </b:tab>
+
+                                                    <b:tab title="Lorem">
+                                                        <h4 class="">Lorem</h4>
+                                                        Lorem ipsum dolor sit amet, consectetur 
+                                                        adipisicing elit. Officia explicabo facilis, 
+                                                        adipisci recusandae est impedit fuga eveniet 
+                                                        iusto aut excepturi quibusdam, omnis totam 
+                                                        similique quod repudiandae eaque soluta ipsa accusamus.
+                                                    </b:tab>
+
+                                                    <b:tab title="Impsu">
+                                                        <h4 class="">Impsu  </h4>
+                                                        Lorem ipsum dolor sit amet, consectetur 
+                                                        adipisicing elit. Officia explicabo facilis, 
+                                                        adipisci recusandae est impedit fuga eveniet 
+                                                        iusto aut excepturi quibusdam, omnis totam 
+                                                        similique quod repudiandae eaque soluta ipsa accusamus.
+                                                    </b:tab>
+                                                </b:tabView>
+                                            </h:form>
+
+                                        </ul>
+                                    </div>
+                                    <!-- /widget-content --> 
+                                </div>
+                            </b:column>
+
+                            <!-- /widget --> 
+                            <b:column col-lg="4" >
+                                <div class="widget">
+                                    <div class="widget-header"> <i class="fa fa-tag"></i>
+                                        <h3> Imagen o Banner</h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <ul class="messages_layout">
+                                            <h:form>
+                                                <b:image value="./resources/images/petroleras.jpg" tooltip="Ain't he a beauty?" class="img-responsive" />
+                                            </h:form>
+
+                                        </ul>
+                                    </div>
+                                    <!-- /widget-content --> 
+                                </div>
+                            </b:column>
+
+                            <!-- /widget --> 
+
+                            <b:column col-lg="4" >
+                                <div class="widget">
+                                    <div class="widget-header"> <i class="fa fa-pie-chart"></i>
+                                        <h3> Información relevante</h3>
+                                    </div>
+
+                                    <div class="widget-content">
+                                        <ul class="messages_layout">
+                                            <h:form>
+                                                <p:growl id="growl" showDetail="true" />
+
+                                                <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
+                                                    <p:chart type="pie" model="#{chartView.pieModel1}" style="width:350px;height:300px">
+                                                        <p:ajax event="itemSelect" listener="#{chartView.itemSelect}" update="growl" />
+                                                    </p:chart>
+                                                    <br/>
+                                                    <b:commandButton value="Imprimir Reporte" action="#{empresaCT.eliminar()}" class="btn btn-info " >
+                                                        <b:iconAwesome name="send"></b:iconAwesome>
+                                                    </b:commandButton> 
+
+                                                </h:panelGrid>
+                                            </h:form>
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </b:column>
+
+                            <!-- /widget --> 
+
+
+                        </b:row>
+
+                        <!-- /row --> 
+
+                        <!-- /container --> 
+                    </b:container>
+
+                </div>
+                <!-- /main-inner --> 
+            </div>
+            <!-- /main -->
+
+        </ui:define>
+
+    </ui:composition>
+
+
+</html>

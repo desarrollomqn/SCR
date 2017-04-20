@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
+        <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+
+        <!--ESTILOS DE PLANTILLAS NUEVAS-->
+
+
+        <h:outputStylesheet name="./css/bootstrap_1.css"/>
+        <!--<h:outputStylesheet name="./css/bootstrap_1.min.css"/>-->
+        <h:outputStylesheet name="./css/font-awesome_1.css"/>
+        <h:outputStylesheet name="./css/font-awesome.min_1.css"/>
+        <h:outputStylesheet name="./css/style.css"/>
+        <h:outputStylesheet name="./css/pages/dashboard.css"/>
+
+        <title>Sistema SCR </title>
+
+    </h:head>
+
+    <h:body>
+ <!--script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script-->
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header" style="    margin-left: 7%;">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand cls-logo" href="#"><strong> SCR</strong> Sistema de Calculo de Regalias</a>
+                </div>               
+            </div>
+        </nav>
+
+        <!-- /navbar -->
+
+        <!--MENU INFERIOR-->
+        <div class="subnavbar">
+            <div class="subnavbar-inner">
+                <div class="container">
+                    <ul class="mainnav">
+                        <li>
+                            <h:link outcome="Dashboard">
+                                <i class="fa fa-dashboard"></i><span>Dashboard</span>                                 
+                            </h:link>
+                        </li>
+                        <li>
+                            <h:link outcome="Trm">
+                                <i class="fa fa-usd"></i><span>TRM</span> 
+                            </h:link>
+                        </li>
+                        <li class="dropdown " id="abrir-menu">
+                            <a href=""  data-toggle="dropdown"> 
+                                <i class="fa fa-area-chart"></i><span>PBL</span> <b class="caret"></b>                                
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <h:link outcome="CalidadCrudos">
+                                        <span>Calidad de crudos</span> 
+                                    </h:link>
+                                </li>
+                                <li>
+                                    <h:link outcome="Derivados">
+                                        <span>Ponderado de refinacion</span> 
+                                    </h:link>
+                                </li>
+                                <li>
+                                    <h:link outcome="Valores">
+                                        <span>Deducibles de exportacion y refinacion</span> 
+                                    </h:link>
+                                </li>
+                                <li>
+                                    <h:link outcome="Pbl">
+                                        <span>Consultar PBL</span> 
+                                    </h:link>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h:link outcome="Contrato">
+                                <i class="fa fa-file-excel-o"></i><span>Contratos </span> 
+                            </h:link>
+                        </li>
+                        <li>
+                            <h:link outcome="Campos">
+                                <i class="fa fa-tint"></i><span>Campos</span> 
+                            </h:link>
+                        </li>
+                        <li class="dropdown " id="abrir-menu">
+                            <a href=""  data-toggle="dropdown"> 
+                                <i class="fa fa-area-chart"></i><span>Regalias</span> <b class="caret"></b>                                
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <h:link outcome="Regalias">
+                                        <span>Cargar Regalias</span> 
+                                    </h:link>
+                                </li>
+                                <li>
+                                    <h:link outcome="ConsultarRegalias">
+                                        <span>Consultar Regalias</span> 
+                                    </h:link>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown " id="abrir-menu">
+                            <a href=""  data-toggle="dropdown"> 
+                                <i class="fa fa-area-chart"></i><span>Estadisticas</span> <b class="caret"></b>                                
+                            </a>
+                            <!--<ul class="dropdown-menu">
+                                <li><a href="">Icons</a></li>
+                                <li><a href="">FAQ</a></li>
+                                <li><a href="">Pricing Plans</a></li>
+                                <li><a href="">Login</a></li>
+                                <li><a href="">Signup</a></li>
+                                <li><a href="">404</a></li>
+                            </ul>-->
+                        </li>
+                    </ul>
+                </div>
+                <!-- /container --> 
+            </div>
+            <!-- /subnavbar-inner --> 
+        </div>
+        <!-- /subnavbar -->
+
+
+
+
+        <ui:insert name="content">Content</ui:insert>
+
+
+
+
+        <div class="extra menus_footer">
+            <div class="extra-inner">
+                <b:container fluid="false">
+                    <b:row >
+                        <b:column col-sm="3" col-xs="6">
+                            <h4>
+                                About Free Admin Template</h4>
+                            <ul>
+                                <li><a href="javascript:;">EGrappler.com</a></li>
+                                <li><a href="javascript:;">Web Development Resources</a></li>
+                                <li><a href="javascript:;">Responsive HTML5 Portfolio Templates</a></li>
+                                <li><a href="javascript:;">Free Resources and Scripts</a></li>
+                            </ul>
+                        </b:column>
+                        <!-- /span3 -->
+                        <b:column col-sm="3" col-xs="6">
+                            <h4>
+                                Support</h4>
+                            <ul>
+                                <li><a href="javascript:;">Frequently Asked Questions</a></li>
+                                <li><a href="javascript:;">Ask a Question</a></li>
+                                <li><a href="javascript:;">Video Tutorial</a></li>
+                                <li><a href="javascript:;">Feedback</a></li>
+                            </ul>
+                        </b:column>
+                        <!-- /span3 -->
+                        <b:column col-sm="3" col-xs="6">
+                            <h4>
+                                Something Legal</h4>
+                            <ul>
+                                <li><a href="javascript:;">Read License</a></li>
+                                <li><a href="javascript:;">Terms of Use</a></li>
+                                <li><a href="javascript:;">Privacy Policy</a></li>
+                            </ul>
+                        </b:column>
+                        <!-- /span3 -->
+                        <b:column col-sm="3" col-xs="6">
+                            <h4>
+                                Open Source jQuery Plugins</h4>
+                            <ul>
+                                <li><a href="http://www.egrappler.com">Open Source jQuery Plugins</a></li>
+                                <li><a href="http://www.egrappler.com;">HTML5 Responsive Tempaltes</a></li>
+                                <li><a href="http://www.egrappler.com;">Free Contact Form Plugin</a></li>
+                                <li><a href="http://www.egrappler.com;">Flat UI PSD</a></li>
+                            </ul>
+                        </b:column>
+                        <!-- /span3 -->
+                    </b:row>
+                    <!-- /row --> 
+                </b:container>
+                <!-- /container --> 
+            </div>
+            <!-- /extra-inner --> 
+        </div>
+        <!-- /extra -->
+
+        <div class="footer ocultar">
+            <div class="footer-inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="span12"> &copy; 2013 <a href="http://www.egrappler.com/">Bootstrap Responsive Admin Template</a>. </div>
+                        <!-- /span12 --> 
+                    </div>
+                    <!-- /row --> 
+                </div>
+                <!-- /container --> 
+            </div>
+            <!-- /footer-inner --> 
+        </div>
+        <!-- /footer --> 
+
+        <div class="footer">
+            <div class="footer-inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="span12"> &copy; 2013 <a href="http://www.planit.com.co/"> Producido por Planit SAS</a>. </div>
+                        <!-- /span12 --> 
+                    </div>
+                    <!-- /row --> 
+                </div>
+                <!-- /container --> 
+            </div>
+            <!-- /footer-inner --> 
+        </div>
+        <!-- /footer --> 
+        
+        
+
+
+
+    </h:body>
+
+    <!--ARCHIVOS JS ALOJADOS EN LA CARPETA DASHBOARD-->    
+    <h:outputScript name="./js/bootstrap_1.js"/>   
+    <h:outputScript name="./js/moment-with-locales.min.js"/>
+    <h:outputScript name="./js/bootstrap-datetimepicker.min.js"/>
+
+    <!--<h:outputScript name="./js/bootstrap.min.js"/>-->
+
+
+</html>

@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="./../template.xhtml">
+
+        <ui:define name="content">
+
+            <div class="main">
+                <div class="main-inner">
+                    <b:container fluid="false" >
+
+                        <div style="margin-bottom: 30px">
+                            <h2> Municipios <small>puedes registrar, consultar, modificar y 
+                                    eliminar los registros de los municipios que desees.</small> </h2>
+                        </div>
+                        <b:row>
+
+                            <b:column col-lg="6" >
+
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-ol"></i>
+                                        <h3> Registro de Municipios </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioRegistro">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="col-sm-4 control-label">Nombre Municipio: </label>
+                                                            <b:inputText span="8" placeholder="Nombre del municipio" value="#{municipioCT.municipio.nombre}"/>                                                             
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Departamento: </label>
+                                                            <b:selectOneMenu col-xs="8" value="#{municipioCT.municipio.departamento.nombre}">
+                                                                <f:selectItem itemLabel="Seleccione Departamento"/>
+                                                                <f:selectItems value="#{departamentoCT.departamentos}" var="departamento" itemLabel="#{departamento.nombre}" itemValue="#{departamento.nombre}"/>
+                                                            </b:selectOneMenu>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <b:commandButton value="Enviar" update=":formularioRegistro :formularioLista" class=" btn btn-info " style="float: right" action="#{municipioCT.registrar()}" >
+                                                                <b:iconAwesome name="send"></b:iconAwesome>
+                                                            </b:commandButton>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                                <!-- /widget-content --> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                            <!-- /widget -->
+
+                            <b:column col-lg="4" style="float: right" >
+                                <div class="widget widget-nopad">
+                                    <div class="widget-header"> <i class="fa fa-area-chart"></i>
+                                        <h3> Grafica 1</h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <h:form>
+                                            <b:image value="./../resources/images/Imagen1.jpg" style="margin-bottom: 31px" tooltip="Ain't he a beauty?" class="img-responsive" />
+                                        </h:form>
+                                    </div>
+                                    <!-- /widget-content --> 
+                                </div>                                
+                            </b:column>
+                            <!-- /widget -->
+
+                            <b:column col-lg="12" >
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3> Listado de Municipios </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioLista">
+                                                    <b:dataTable value="#{municipioCT.municipios}" var="municipio" >
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Prueba"/>
+                                                        </f:facet>
+                                                        <b:dataTableColumn label="Nombre">
+                                                            <h:outputLabel value="#{municipio.nombre}"/>
+                                                        </b:dataTableColumn>
+                                                        <b:dataTableColumn label="Departamento">
+                                                            <h:outputLabel value="#{municipio.iddepartamento.nombre}"/>
+                                                        </b:dataTableColumn>                                                        
+                                                    </b:dataTable>
+                                                </h:form>
+                                            </div>                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+
+                        </b:row>
+
+                        <!-- /row --> 
+
+                        <!-- /container --> 
+                    </b:container>
+
+                </div>
+                <!-- /main-inner --> 
+            </div>
+            <!-- /main -->    
+        </ui:define>
+
+    </ui:composition>
+
+</html>

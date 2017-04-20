@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+                <div class="main">
+                    <div class="main-inner">
+                        <b:container fluid="false" >
+
+                            <div style="margin-bottom: 30px">
+                                <h2> Produccion <small>puedes registrar la produccion del campo deseado.</small> </h2>
+                            </div>
+                            <b:row>
+
+                                <b:column col-lg="6" >
+                                    <div class="widget ">
+                                        <div class="widget-header"> <i class="fa fa-list-ol"></i>
+                                            <h3> Registro de Produccion </h3>
+                                        </div>
+                                        <!-- /widget-header -->
+                                        <div class="widget-content">
+                                            <div class="widget big-stats-container">
+                                                <div class="widget-content">
+                                                    <h:form id="formularioRegistro">
+                                                        <div class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label for="inputCampo" class="col-sm-4 control-label">Campo: </label>
+                                                                <p:outputLabel value="#{produccionCT.produccion.idcampo.nombre}" id="inputCampo"/>                                                             
+                                                            </div>
+                                                            
+                                                            <div class="form-group">
+                                                                <label for="inputValor" class="col-sm-4 control-label">Volumen promedio diario (BPPD): </label>
+                                                                <b:inputText value="#{produccionCT.produccion.idcampo.nombre}" id="inputValor" placeholder="Volumen promedio diario" span="8"/>                                                             
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <b:commandButton value="Enviar" update=":formularioRegistro" class="btn btn-info " style="float: right">
+                                                                    <b:iconAwesome name="send"></b:iconAwesome>
+                                                                </b:commandButton>
+                                                            </div>
+                                                        </div>
+                                                    </h:form>
+                                                    <!-- /widget-content --> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </b:column>
+                                <!-- /widget -->
+
+
+
+                            </b:row>
+
+                            <!-- /row --> 
+
+                            <!-- /container --> 
+                        </b:container>
+
+                    </div>
+                    <!-- /main-inner --> 
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

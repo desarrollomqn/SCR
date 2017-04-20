@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition template="./template.xhtml">
+
+        <ui:define name="content">
+
+            <div class="main">
+                <div class="main-inner">
+                    <b:container fluid="false" >
+
+                        <div style="margin-bottom: 30px">
+                            <h2> Resultados <small></small> </h2>
+                        </div>
+                        <b:row>                         
+
+                            <b:column col-lg="12" >
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3> Regalias </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content"> 
+                                                <b:dataTable value="#{regaliasCT.regalias}" var="regalia">
+                                                    <b:dataTableColumn label="campo">
+                                                        <h:outputLabel value="#{regalia.campo.nombre}"/>
+                                                    </b:dataTableColumn>
+                                                    <b:dataTableColumn label="Produccion (BPPD)">
+                                                        <h:outputLabel value="#{regalia.produccion.produccion}"/>
+                                                    </b:dataTableColumn> 
+                                                    <b:dataTableColumn label="Produccion mes (Bbl/mes)">
+                                                        <h:outputLabel value="#{regalia.produccion.produccion * 30}"/>
+                                                    </b:dataTableColumn> 
+                                                    <b:dataTableColumn label="Regalias (%)">
+                                                        <h:outputLabel value="#{regalia.porcentaje}"/>
+                                                    </b:dataTableColumn> 
+                                                    <b:dataTableColumn label="Precio base de liquidacion">
+                                                        <h:outputLabel value="#{regalia.pbl.prc}"/>
+                                                    </b:dataTableColumn> 
+                                                    <b:dataTableColumn label="Regalias">
+                                                        <h:outputLabel value="#{regalia.regalias}"/>
+                                                    </b:dataTableColumn>
+                                                </b:dataTable>
+                                            </div>
+                                            <!-- /widget-content --> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+
+                        </b:row>
+
+                        <!-- /row --> 
+
+                        <!-- /container --> 
+                    </b:container>
+
+                </div>
+                <!-- /main-inner --> 
+            </div>
+            <!-- /main -->            
+
+        </ui:define>
+
+    </ui:composition>
+
+
+</html>
+

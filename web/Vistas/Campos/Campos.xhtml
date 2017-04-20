@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:composition template="./../template.xhtml">
+
+        <ui:define name="content">
+            <div class="main">
+                <div class="main-inner">
+                    <b:container fluid="true" >
+                        <div style="margin-bottom: 30px">
+                            <h2> Campos <small>puedes registrar, consultar, modificar y 
+                                    eliminar los registros de los campos que desees.</small> </h2>
+                        </div>
+                        <b:row>
+                            <h:form id="formularioRegistro">
+                                <p:growl  autoUpdate="true" showDetail="true" life="3000"/>
+                                <b:column col-lg="6" >
+                                    <div class="widget">
+                                        <div class="widget-header"> <i class="fa fa-list-ol"></i>
+                                            <h3>Registro de Campos</h3>
+                                        </div>
+                                        <!-- /widget-header -->
+                                        <div class="widget-content big-stats-container">
+                                            <div class="widget-content">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label for="inputCampo" class="control-label">Nombre Campo: </label>
+                                                        <p:inputText required="true" requiredMessage="Ingrese nombre del campo" class="form-control" id="inputCampo" placeholder="Nombre del campo" value="#{campoCT.campo.nombre}"/>                                                            
+                                                        <p:message for="inputCampo"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="inputCampo" class="control-label">Porcentaje: </label>
+                                                        <p:inputText required="true" requiredMessage="Ingrese porcentaje de regalias" class="form-control" id="inputPorcentaje" placeholder="Porcentaje" value="#{campoCT.campo.porcentaje}"/>                                                            
+                                                        <p:message for="inputPorcentaje"/>
+                                                    </div>
+                                                    <p:separator/>
+                                                    <div align="right">
+                                                        <p:inputText value="#{contratoCT.buscar}" class="form-control" placeholder="Buscar..." style="width: 50%">
+                                                            <p:ajax event="keyup" listener="#{contratoCT.buscarContratos()}" update="DTContratos"/>
+                                                        </p:inputText><br/>
+                                                    </div>
+                                                    <div class="form-group">                                                       
+                                                        <p:dataTable id="DTContratos" selection="#{campoCT.contratos}" rowKey="#{contrato.idcontrato}" value="#{contratoCT.contratos}" var="contrato"  
+                                                                     rows="10"
+                                                                     paginator="true"
+                                                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                     rowsPerPageTemplate="5,10,15"
+                                                                     emptyMessage="Contratos no registrados">
+                                                            <f:facet name="header">Contratos</f:facet>
+                                                            <p:column selectionMode="multiple" style="width:40px;text-align:center"/>
+                                                            <p:column headerText="Nombre" sortBy="#{contrato.nombre}">
+                                                                <h:outputLabel value="#{contrato.nombre}"/>
+                                                            </p:column>
+                                                            <p:column headerText="Tipo Contrato" sortBy="#{contrato.tipo.nombre}">
+                                                                <h:outputLabel value="#{contrato.tipo.nombre}"/>
+                                                            </p:column>                                                       
+                                                            <p:column style="width: 60px">
+                                                                <p:commandLink style="color: white; width: 100%" process="@this" update=":formularioRegistro" action="#{contratoCT.seleccionarCRUD(1)}" title="Modificar" class="btn btn-block btn-info">
+                                                                    <f:setPropertyActionListener value="#{contrato}" target="#{contratoCT.contrato}"/>                                                               
+                                                                    <i class="fa fa-pencil"></i> 
+                                                                </p:commandLink>
+                                                            </p:column>
+                                                            <p:column style="width: 60px">
+                                                                <p:commandLink style="color: white; width: 100%" action="#{contratoCT.eliminar()}" onclick="PrimeFaces.monitorDownload(start, stop);" process="@this" update="@form" title="Eliminar" class="btn btn-block btn-danger">
+                                                                    <f:setPropertyActionListener value="#{contrato}" target="#{contratoCT.contrato}"/>
+                                                                    <i class="fa fa-trash"></i>                                                     
+                                                                </p:commandLink>
+                                                            </p:column>
+                                                        </p:dataTable>
+                                                    </div> 
+                                                    <p:separator/>
+                                                    <div class="form-group" align="right">
+                                                        <h:panelGrid columns="2">
+                                                            <p:commandButton id="Cancelar"  process="@this" 
+                                                                             immediate="true" class="btn btn-info" 
+                                                                             update=":formularioRegistro :formularioLista"
+                                                                             action="#{campoCT.cancelar()}"
+                                                                             value="Cancelar" />
+
+
+                                                            <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                                             value="#{campoCT.nombreOperacion}" 
+                                                                             action="#{campoCT.metodo()}" 
+                                                                             update=":formularioRegistro :formularioLista"
+                                                                             class="btn btn-success"/>                                                                                                                        
+                                                        </h:panelGrid>
+                                                    </div> 
+                                                </div>
+                                                <!-- /widget-content -->    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </b:column>
+                                <script type="text/javascript">
+                                    function start() {
+                                        PF('statusDialog').show();
+                                    }
+                                    function stop() {
+                                        PF('statusDialog').hide();
+                                    }
+                                </script>
+                                <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                    <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                </p:dialog>
+                            </h:form>
+
+                            <b:column col-lg="6" >
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3> Listado de campos </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioLista">
+                                                    <div align="right">
+                                                        <p:inputText class="form-control" placeholder="Buscar..." value="#{campoCT.buscar}" style="width: 50%">
+                                                            <p:ajax listener="#{campoCT.buscarCampo()}" update="DTCampos" event="keyup"/>
+                                                        </p:inputText><br/>
+                                                    </div>
+                                                    <p:dataTable id="DTCampos" value="#{campoCT.campos}" var="campo"  
+                                                                 rows="10"
+                                                                 paginator="true"
+                                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                 rowsPerPageTemplate="5,10,15"
+                                                                 emptyMessage="Campos no registrados">
+                                                        <p:column headerText="Nombre" sortBy="#{campo.nombre}">
+                                                            <h:outputLabel value="#{campo.nombre}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="Porcentaje" sortBy="#{campo.porcentaje}">
+                                                            <h:outputLabel value="#{campo.porcentaje}"/>
+                                                        </p:column>
+
+                                                        <p:column style="width: 60px">
+                                                            <p:commandLink style="color: white; width: 100%" process="@this" update=":formularioRegistro" action="#{campoCT.seleccionarCRUD(1)}" title="Modificar" class="btn btn-block btn-info">
+                                                                <f:setPropertyActionListener value="#{campo}" target="#{campoCT.campo}"/>                                                               
+                                                                <i class="fa fa-pencil"></i> 
+                                                            </p:commandLink>
+                                                        </p:column>
+                                                        <p:column style="width: 60px">
+                                                            <p:commandLink style="color: white; width: 100%" action="#{campoCT.eliminar()}" onclick="PrimeFaces.monitorDownload(start, stop);" process="@this" update="@form" title="Eliminar" class="btn btn-block btn-danger">
+                                                                <f:setPropertyActionListener value="#{campo}" target="#{campoCT.campo}"/>
+                                                                <i class="fa fa-trash"></i>                                                     
+                                                            </p:commandLink>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                    <script type="text/javascript">
+                                                        function start() {
+                                                            PF('statusDialog').show();
+                                                        }
+                                                        function stop() {
+                                                            PF('statusDialog').hide();
+                                                        }
+                                                    </script>
+                                                    <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                    </p:dialog>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                        </b:row>                     
+                    </b:container>
+                </div>
+                <!-- /main-inner --> 
+            </div>
+            <!-- /main -->    
+        </ui:define>
+
+    </ui:composition>
+
+</html>

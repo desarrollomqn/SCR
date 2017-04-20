@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+                <div class="main">
+                    <div class="main-inner">
+                        <b:container fluid="true" >
+                            <b:row>
+                                <h:form id="formularioRegistro">
+                                    <b:column col-lg="6">
+                                        <div class="widget ">
+                                            <div class="widget-header"> <i class="fa fa-list-ol"></i>
+                                                <h3> Consulta de Pbl </h3>
+                                            </div>
+                                            <!-- /widget-header -->
+                                            <div class="widget-content">
+                                                <div class="widget big-stats-container">
+                                                    <div class="widget-content">
+                                                        <div class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label for="inputAnio" class="control-label">Año: </label>
+                                                                <p:inputText required="true" requiredMessage="indique año" class="form-control" value="#{pblCT.pbl.anio}" id="inputValor" placeholder="2016"  />                                                                
+                                                                <p:message for="inputValor"/>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputMes" class="control-label">Mes a consultar: </label>
+                                                                <h:selectOneMenu id="inputMes" required="true" requiredMessage="Seleccione mes" class="form-control" value="#{pblCT.mes}" >
+                                                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione Mes"/>
+                                                                    <f:selectItem itemLabel="Enero" itemValue="1"/>
+                                                                    <f:selectItem itemLabel="Febrero" itemValue="2"/>   
+                                                                    <f:selectItem itemLabel="Marzo" itemValue="3"/>   
+                                                                    <f:selectItem itemLabel="Abril" itemValue="4"/>   
+                                                                    <f:selectItem itemLabel="Mayo" itemValue="5"/>   
+                                                                    <f:selectItem itemLabel="Junio" itemValue="6"/>   
+                                                                    <f:selectItem itemLabel="Julio" itemValue="7"/>   
+                                                                    <f:selectItem itemLabel="Agosto" itemValue="8"/>   
+                                                                    <f:selectItem itemLabel="Septiembre" itemValue="9"/>   
+                                                                    <f:selectItem itemLabel="Octubre" itemValue="10"/>   
+                                                                    <f:selectItem itemLabel="Noviembre" itemValue="11"/>   
+                                                                    <f:selectItem itemLabel="Diciembre" itemValue="12"/>   
+                                                                </h:selectOneMenu>
+                                                                <p:message for="inputMes"/>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label">Departamento: </label>
+                                                                <h:selectOneMenu class="form-control" required="true" requiredMessage="Seleccione departamento" id="SMDepartamento" value="#{municipioCT.municipio.departamento.iddepartamento}">
+                                                                    <f:selectItem itemLabel="Seleccione Departamento" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{departamentoCT.departamentos}" var="departamento" itemLabel="#{departamento.nombre}" itemValue="#{departamento.iddepartamento}"/>
+                                                                    <p:ajax event="change" listener="#{municipioCT.cambioDepartamentos(municipioCT.municipio.departamento)}" update="SMMunicipio"/>
+                                                                </h:selectOneMenu>
+                                                                 <p:message for="SMDepartamento"/>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label">Municipio: </label>
+                                                                <h:selectOneMenu class="form-control" required="true" requiredMessage="Seleccione municipio" id="SMMunicipio" value="#{pblCT.municipio.idmunicipio}">
+                                                                    <f:selectItem itemLabel="Seleccione Municipio" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{municipioCT.municipiosFiltrados}" var="municipio" itemLabel="#{municipio.nombre}" itemValue="#{municipio.idmunicipio}"/>
+                                                                </h:selectOneMenu>
+                                                                 <p:message for="SMMunicipio"/>
+                                                            </div>        
+
+                                                            <div class="form-group">
+                                                                <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" icon="fa fa-send" value="Enviar" update=":formularioRegistro :formularioLista" action="#{pblCT.consultarPbl()}" class="btn btn-info "  style="float: right"/>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /widget-content --> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script type="text/javascript">
+                                            function start() {
+                                                PF('statusDialog').show();
+                                            }
+                                            function stop() {
+                                                PF('statusDialog').hide();
+                                            }
+                                        </script>
+                                        <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                            <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                        </p:dialog>
+                                    </b:column>
+                                </h:form>
+                                <h:form id="formularioLista">
+                                    <b:column col-lg="12">
+                                        <div class="widget " >
+                                            <div class="widget-header" > <i class="fa fa-list-ol"></i>
+                                                <h3> Valores </h3>
+                                            </div>
+                                            <div class="widget-content" >
+                                                <div class="widget big-stats-container">
+                                                    <div class="widget-content">
+
+                                                        <table class="order-table">
+
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="order-table-header" scope="col">Contrato</th>
+                                                                    <th class="order-table-header" scope="col">CIB</th>
+                                                                    <th class="order-table-header" scope="col">CAR</th>                                                                   
+                                                                    <th class="order-table-header" scope="col">COV</th>
+                                                                    <th class="order-table-header" scope="col">CTC</th>                                                                    
+                                                                    <th class="order-table-header" scope="col">CT1</th>
+                                                                    <th class="order-table-header" scope="col">CCE</th>                                                                 
+                                                                    <th class="order-table-header" scope="col">CT2</th>
+                                                                    <th class="order-table-header" scope="col">REF</th>
+                                                                    <th class="order-table-header" scope="col">EXP</th>
+                                                                    <th class="order-table-header" scope="col">PRC</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <c:forEach items="#{pblCT.pbls}" var="item">           
+                                                                    <tr class="order-table-odd-row">
+                                                                        <td align="center">#{item.contrato.nombre}</td>
+                                                                        <td align="center">#{item.contrato.cib}</td> 
+                                                                        <td align="center">#{item.contrato.car}</td> 
+                                                                        <td align="center">#{item.contrato.cov}</td>
+                                                                        <td align="center">#{item.ctc}</td>                                                                       
+                                                                        <td align="center">#{item.ct1}</td>
+                                                                        <td align="center">#{item.cce}</td>                                                                        
+                                                                        <td align="center">#{item.ct2}</td>
+                                                                        <td align="center">#{item.refinacion}</td>
+                                                                        <td align="center">#{item.exportacion}</td>
+                                                                        <td align="center">#{item.prc}</td>
+                                                                    </tr>
+                                                                </c:forEach>
+                                                            </tbody>
+                                                        </table> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </b:column>                                  
+                                </h:form>
+                                <!-- /widget -->
+                            </b:row>
+                            <!-- /row --> 
+                            <!-- /container --> 
+                        </b:container>
+
+                    </div>
+                    <!-- /main-inner --> 
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,265 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="./../template.xhtml">
+
+        <ui:define name="content">
+            <div class="main">
+                <div class="main-inner">
+                    <b:container fluid="false" >
+
+                        <div style="margin-bottom: 30px">
+                            <h2> Valores <small>puedes registrar, consultar, modificar y 
+                                    eliminar los registros de los valores que desees.</small> </h2>
+                        </div>
+                        <b:row>
+                            <h:form id="formularioRegistro">
+                                <p:growl autoUpdate="true" life="4000" showDetail="true"/>
+                                <b:column col-lg="12" >
+                                    <div class="widget ">
+                                        <div class="widget-header"> <i class="fa fa-list-ol"></i>
+                                            <h3> Registro de Valores </h3>
+                                        </div>
+                                        <!-- /widget-header -->
+                                        <div class="widget-content">
+                                            <div class="widget big-stats-container">
+                                                <div class="widget-content">
+                                                    <b:column col-lg="6">
+                                                        <div class="widget-content">
+                                                            <div class="form-horizontal">
+
+                                                                <p align="left"><strong>Año y Trimestre</strong></p>
+
+                                                                <div class="form-group">
+                                                                    <label for="inputAnio" class="control-label">Año:</label>
+                                                                    <p:inputText value="#{valoresCT.valor.anio}" id="inputAnio" class="form-control" placeholder="2016">
+                                                                        <p:ajax event="keyup" update="LTrimestreMes STrimestreMes"/>
+                                                                    </p:inputText>                                                            
+                                                                    <p:message for="inputAnio"/>                                                            
+                                                                </div>
+                                                                <c:choose>
+                                                                    <c:when test="${valoresCT.valor.anio >= 2012}">
+                                                                        <div class="form-group">  
+                                                                            <p:outputLabel id="LTrimestreMes" for="inputAnio" class="control-label" value="Seleccione Mes:"/>
+                                                                            <h:selectOneMenu id="STrimestreMes" class="form-control" value="#{valoresCT.valor.trimestreMes}" label="Selecciona el Mes: ">
+                                                                                <f:selectItem itemLabel="Enero" itemValue="1"/>
+                                                                                <f:selectItem itemLabel="Febrero" itemValue="2"/>
+                                                                                <f:selectItem itemLabel="Marzo" itemValue="3"/>
+                                                                                <f:selectItem itemLabel="Abril" itemValue="4"/>
+                                                                                <f:selectItem itemLabel="Mayo" itemValue="5"/>
+                                                                                <f:selectItem itemLabel="Junio" itemValue="6"/>
+                                                                                <f:selectItem itemLabel="Julio" itemValue="7"/>
+                                                                                <f:selectItem itemLabel="Agosto" itemValue="8"/>
+                                                                                <f:selectItem itemLabel="Septiembre" itemValue="9"/>
+                                                                                <f:selectItem itemLabel="Octubre" itemValue="10"/>
+                                                                                <f:selectItem itemLabel="Noviembre" itemValue="11"/>
+                                                                                <f:selectItem itemLabel="Diciembre" itemValue="12"/>
+                                                                            </h:selectOneMenu>
+                                                                            <h:message for="inputTrimestre"/>
+                                                                        </div>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <div  class="form-group">  
+                                                                            <p:outputLabel id="LTrimestreMes" for="inputAnio" class="control-label" value="Seleccione Trimestre:"/>
+                                                                            <h:selectOneMenu id="STrimestreMes" class="form-control" value="#{valoresCT.valor.trimestreMes}" label="Selecciona el Trimestre: ">
+                                                                                <f:selectItem itemLabel="1er Trimestre" itemValue="1"/>
+                                                                                <f:selectItem itemLabel="2do Trimestre" itemValue="2"/>
+                                                                                <f:selectItem itemLabel="3er Trimestre" itemValue="3"/>
+                                                                                <f:selectItem itemLabel="4to Trimestre" itemValue="4"/>
+                                                                            </h:selectOneMenu>
+                                                                            <h:message for="inputTrimestre"/>
+                                                                        </div>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+
+                                                                <hr/>
+                                                                <p align="left"><strong>Crudo producido</strong></p>
+
+                                                                <div class="form-group">
+                                                                    <label for="inputV1" class="control-label">Volúmen de Crudo Refinado (V1)</label>
+                                                                    <p:inputText class="form-control" value="#{valoresCT.valor.v1}" id="inputV1" placeholder="Valor V1" />                                                             
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputV2" class="control-label">Volúmen de Crudo exportado (V2)</label>
+                                                                    <p:inputText class="form-control" value="#{valoresCT.valor.v2}" id="inputV2" placeholder="Valor V2" />                                                             
+                                                                </div>                                                                
+
+                                                                <hr/>
+                                                                <p align="left"><strong>Deducible de refinacion</strong></p>
+                                                                <div class="form-group">
+                                                                    <label for="inputCce" class="control-label">CCE</label>
+                                                                    <p:inputText class="form-control" value="#{valoresCT.valor.cce}" id="inputCce" placeholder="Valor CCE" />                                                             
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputCtme" class="control-label">CTME</label>
+                                                                    <p:inputText class="form-control" value="#{valoresCT.valor.ctme}" id="inputCtme" placeholder="Valor CTME"/>                                                             
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </b:column>
+                                                    <b:column col-lg="6">
+                                                        <div class="widget-content">                                                           
+                                                            <p align="left"><strong>Deducible de exportacion</strong></p>
+                                                            <div class="form-horizontal">                                                        
+                                                                <div class="form-group">
+                                                                    <label for="inputCtc" class="control-label">CTC</label>
+                                                                    <p:inputText class="form-control" value="#{valoresCT.valor.ctc}" id="inputCtc" placeholder="Valor CTC" />                                                      
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputCmt" class="control-label">CMT</label>
+                                                                    <p:inputText class="form-control" value="#{valoresCT.valor.cmt}" id="inputCmt" placeholder="Valor CMT" />                                                             
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputCtmc" class="control-label">CTMC</label>
+                                                                    <p:inputText class="form-control" value="#{valoresCT.valor.ctmc}" id="inputCtmc" placeholder="Valor CTMC" />                                                             
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputCtmd" class="control-label">CTMD</label>
+                                                                    <p:inputText class="form-control" value="#{valoresCT.valor.ctmd}" id="inputCtmd" placeholder="Valor CTMD" />                                                             
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputCr" class="control-label">CR</label>
+                                                                    <p:inputText class="form-control" value="#{valoresCT.valor.cr}" id="inputCr" placeholder="Valor CR"/>                                                             
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </b:column>
+                                                </div>
+                                                <!-- /widget-content -->
+                                                <p:separator/>
+                                                <div class="form-group" align="right">                                                       
+                                                    <h:panelGrid columns="2">
+                                                        <p:commandButton id="Cancelar"  process="@this" 
+                                                                         immediate="true" class="btn btn-info" 
+                                                                         update=":formularioRegistro :formularioLista"
+                                                                         action="#{valoresCT.cancelar()}"
+                                                                         value="Cancelar" />
+
+                                                        <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                                         value="#{valoresCT.nombreOperacion}" 
+                                                                         action="#{valoresCT.metodo()}" 
+                                                                         update=":formularioRegistro :formularioLista"
+                                                                         class="btn btn-success"/>                                                                                                                        
+                                                    </h:panelGrid>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </b:column>                                                   
+                            </h:form>
+
+                            <b:column col-lg="12">
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3> Listado de valores para calculo del pbl </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioLista">
+                                                    <div align="right">
+                                                        <p:inputText class="form-control" placeholder="Buscar..." style="width: 50%"/><br/>
+                                                    </div>
+                                                    <p:dataTable value="#{valoresCT.valores}" var="valor"  
+                                                                 rows="10"
+                                                                 paginator="true"
+                                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                 rowsPerPageTemplate="5,10,15"
+                                                                 emptyMessage="Valores no registrados">
+
+                                                        <p:column headerText="Año" sortBy="#{valor.anio}">
+                                                            <h:outputLabel value="#{valor.anio}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="Trimestre-mes" sortBy="#{valor.trimestreMes}">
+                                                            <h:outputLabel value="#{valor.trimestreMes}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="V1" sortBy="#{valor.v1}">
+                                                            <h:outputLabel value="#{valor.v1}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="V2" sortBy="#{valor.v2}">
+                                                            <h:outputLabel value="#{valor.v2}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="VT" sortBy="#{valor.vt}">
+                                                            <h:outputLabel value="#{valor.vt}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="CTC" sortBy="#{valor.ctc}">
+                                                            <h:outputLabel value="#{valor.ctc}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="CMT" sortBy="#{valor.cmt}">
+                                                            <h:outputLabel value="#{valor.cmt}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="CTMC" sortBy="#{valor.ctmc}">
+                                                            <h:outputLabel value="#{valor.ctmc}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="CTMD" sortBy="#{valor.ctmd}">
+                                                            <h:outputLabel value="#{valor.ctmd}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="CR" sortBy="#{valor.cr}">
+                                                            <h:outputLabel value="#{valor.cr}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="CCE" sortBy="#{valor.cce}">
+                                                            <h:outputLabel value="#{valor.cce}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="CTME" sortBy="#{valor.ctme}">
+                                                            <h:outputLabel value="#{valor.ctme}"/>
+                                                        </p:column>
+
+                                                        <p:column style="width: 60px">
+                                                            <p:commandLink style="color: white; width: 100%" process="@this" update=":formularioRegistro" action="#{valoresCT.seleccionarCRUD(1)}" title="Modificar" class="btn btn-block btn-info">
+                                                                <f:setPropertyActionListener value="#{valor}" target="#{valoresCT.valor}"/>                                                               
+                                                                <i class="fa fa-pencil"></i> 
+                                                            </p:commandLink>
+                                                        </p:column>
+
+                                                        <p:column style="width: 60px">
+                                                            <p:commandLink style="color: white; width: 100%" action="#{valoresCT.eliminar()}" onclick="PrimeFaces.monitorDownload(start, stop);" process="@this" update="@form" title="Eliminar" class="btn btn-block btn-danger">
+                                                                <f:setPropertyActionListener value="#{valor}" target="#{valoresCT.valor}"/>
+                                                                <i class="fa fa-trash"></i>                                                     
+                                                            </p:commandLink>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                    <script type="text/javascript">
+                                                        function start() {
+                                                            PF('statusDialog').show();
+                                                        }
+                                                        function stop() {
+                                                            PF('statusDialog').hide();
+                                                        }
+                                                    </script>   
+                                                    <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                    </p:dialog>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                        </b:row>                         
+                    </b:container>
+                </div>
+            </div>             
+        </ui:define>
+    </ui:composition>
+</html>

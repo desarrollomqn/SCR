@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="./../template.xhtml">
+
+        <ui:define name="content">
+
+            <div class="main">
+                <div class="main-inner">
+                    <b:container fluid="true" >
+                        <div style="margin-bottom: 30px">
+                            <h2> Contratos <small>puedes registrar, consultar, modificar y 
+                                    eliminar los registros de los contratos que desees.</small> </h2>
+                        </div>
+                        <b:row>
+                            <b:column col-lg="7" >
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-ol"></i>
+                                        <h3> Registro de Contratos </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioRegistro">
+                                                    <p:growl showDetail="true"  autoUpdate="true" life="3000"/>
+                                                    <div class="form-horizontal">                                                                                                          
+                                                        <div class="form-group">
+                                                            <label class="control-label">Tipo de contrato: </label>
+                                                            <h:selectOneMenu class="form-control" required="true" requiredMessage="Seleccione tipo de contrato" id="SMTipo" value="#{contratoCT.contrato.tipo.nombre}">
+                                                                <f:selectItem itemLabel="Seleccione Tipo de contrato" noSelectionOption="true"/>
+                                                                <f:selectItems value="#{tipoCT.tipos}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo.nombre}"/>
+                                                            </h:selectOneMenu>
+                                                            <p:message for="SMTipo"/>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="inputNombre" class="control-label">Nombre Contrato: </label>
+                                                            <h:inputText required="true" requiredMessage="Indique nombre del contrato" class="form-control" id="inputNombre" value="#{contratoCT.contrato.nombre}">
+                                                                <f:passThroughAttribute name="placeholder" value="Nombre del contrato" />
+                                                            </h:inputText>
+                                                            <p:message for="inputNombre"/>
+                                                        </div>                                                        
+
+                                                        <div class="form-group">
+                                                            <label for="inputCib" class="control-label">Distancia CIB (km): </label>
+                                                            <h:inputText required="true" requiredMessage="Indique distancia CIB" id="inputCib" class="form-control" value="#{contratoCT.contrato.cib}">
+                                                                <f:passThroughAttribute name="placeholder" value="Distancia CIB" />
+                                                            </h:inputText>
+                                                            <p:message for="inputCib"/>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="inputCar" class="control-label">Distancia CAR (km): </label>
+                                                            <h:inputText id="inputCar" required="true" requiredMessage="Indique distancia CAR" class="form-control" value="#{contratoCT.contrato.car}">
+                                                                <f:passThroughAttribute name="placeholder" value="Distancia CAR" />
+                                                            </h:inputText>
+                                                            <p:message for="inputCar"/>
+                                                        </div>                                                        
+
+                                                        <div class="form-group">
+                                                            <label for="inputCov" class="control-label">Distancia Coveñas (km): </label>
+                                                            <h:inputText required="true" requiredMessage="Indique distancia a coveñas" id="inputCov" class="form-control" value="#{contratoCT.contrato.cov}">
+                                                                <f:passThroughAttribute name="placeholder" value="Distancia Coveñas" />
+                                                            </h:inputText>
+                                                            <p:message for="inputCov"/>
+                                                        </div>                                                      
+                                                        <p:separator/>
+                                                        <p>Seleccione los municipios a los que esta asociado el contrato</p>
+                                                        <p:dataTable selection="#{contratoCT.municipios}" value="#{municipioCT.municipios}" rowKey="#{municipio.idmunicipio}" var="municipio" paginator="true"
+                                                                     rows="5" rowsPerPageTemplate="5,10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" emptyMessage="Municipios no registrados">
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Municipios"/>
+                                                            </f:facet>
+                                                            <p:column selectionMode="multiple" style="width:30px;text-align:center"/>
+                                                            <p:column headerText="Nombre" sortBy="#{municipio.nombre}">
+                                                                <h:outputLabel value="#{municipio.nombre}"/>
+                                                            </p:column>                                                               
+                                                            <p:column headerText="Departamento" sortBy="#{municipio.departamento.nombre}">
+                                                                <h:outputLabel value="#{municipio.departamento.nombre}"/>
+                                                            </p:column>                                                        
+                                                        </p:dataTable>
+                                                        <p:separator/>
+                                                        <div class="form-group" align="right">
+                                                            <h:panelGrid columns="2">
+                                                                <p:commandButton id="Cancelar"  process="@this" 
+                                                                                 immediate="true" class="btn btn-info" 
+                                                                                 update=":formularioRegistro :formularioLista"
+                                                                                 action="#{contratoCT.cancelar()}"
+                                                                                 value="Cancelar" />
+
+
+                                                                <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                                                 value="#{contratoCT.nombreOperacion}" 
+                                                                                 action="#{contratoCT.metodo()}" 
+                                                                                 update=":formularioRegistro :formularioLista"
+                                                                                 class="btn btn-success"/>                                                                                                                        
+                                                            </h:panelGrid>
+                                                        </div>     
+                                                    </div>
+                                                    <script type="text/javascript">
+                                                        function start() {
+                                                            PF('statusDialog').show();
+                                                        }
+                                                        function stop() {
+                                                            PF('statusDialog').hide();
+                                                        }
+                                                    </script>
+                                                    <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                    </p:dialog>
+                                                </h:form>
+                                                <!-- /widget-content --> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                            <!-- /widget -->
+
+                            <b:column col-lg="5" >
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3> Listado de Contratos </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioLista">
+                                                    <div align="right">
+                                                        <p:inputText value="#{contratoCT.buscar}" class="form-control" placeholder="Buscar..." style="width: 50%">
+                                                            <p:ajax event="keyup" listener="#{contratoCT.buscarContratos()}" update="DTContratos"/>
+                                                        </p:inputText><br/>
+                                                    </div>
+                                                    <p:dataTable id="DTContratos" value="#{contratoCT.contratos}" var="contrato"  
+                                                                 rows="10"
+                                                                 paginator="true"
+                                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                 rowsPerPageTemplate="5,10,15"
+                                                                 emptyMessage="Contratos no registrados">
+                                                        <p:column headerText="Nombre" sortBy="#{contrato.nombre}">
+                                                            <h:outputLabel value="#{contrato.nombre}"/>
+                                                        </p:column>
+                                                        <p:column headerText="Tipo Contrato" sortBy="#{contrato.tipo.nombre}">
+                                                            <h:outputLabel value="#{contrato.tipo.nombre}"/>
+                                                        </p:column>                                                       
+                                                        <p:column style="width: 60px">
+                                                            <p:commandLink style="color: white; width: 100%" process="@this" update=":formularioRegistro" action="#{contratoCT.seleccionarCRUD(1)}" title="Modificar" class="btn btn-block btn-info">
+                                                                <f:setPropertyActionListener value="#{contrato}" target="#{contratoCT.contrato}"/>                                                               
+                                                                <i class="fa fa-pencil"></i> 
+                                                            </p:commandLink>
+                                                        </p:column>
+                                                        <p:column style="width: 60px">
+                                                            <p:commandLink style="color: white; width: 100%" action="#{contratoCT.eliminar()}" onclick="PrimeFaces.monitorDownload(start, stop);" process="@this" update="@form" title="Eliminar" class="btn btn-block btn-danger">
+                                                                <f:setPropertyActionListener value="#{contrato}" target="#{contratoCT.contrato}"/>
+                                                                <i class="fa fa-trash"></i>                                                     
+                                                            </p:commandLink>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                    <script type="text/javascript">
+                                                        function start() {
+                                                            PF('statusDialog').show();
+                                                        }
+                                                        function stop() {
+                                                            PF('statusDialog').hide();
+                                                        }
+                                                    </script>
+                                                    <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                    </p:dialog>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                        </b:row>
+                        <!-- /row --> 
+                        <!-- /container --> 
+                    </b:container>
+                </div>
+                <!-- /main-inner --> 
+            </div>
+            <!-- /main -->            
+        </ui:define>
+    </ui:composition>
+</html>

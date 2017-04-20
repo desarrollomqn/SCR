@@ -1,0 +1,354 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <ui:composition template="./../template.xhtml">
+
+        <ui:define name="content">
+
+            <div class="main">
+                <div class="main-inner trmPage">
+                    <b:container fluid="false" >
+
+                        <div class="contenedorPageTitle">
+                            <h2> TRM <small>Reporte de valores</small> </h2>
+                        </div>
+                        <b:row>
+                            
+                             <b:column col-lg="12" >
+                                <div class="widget widget-dolarhoy">
+                                    <div class="widget-header"><h3><i class="fa fa-usd"></i>Dólar Hoy</h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                                <p>#{trmCT.trmd} COP</p>
+                                            <!-- /widget-content --> 
+                                    </div>
+                                </div>
+                            </b:column>
+                            
+                            
+                            
+                            
+                            
+                            <!--
+                            <h:form id="formularioRegistro">                                
+                                <b:column col-lg="4">
+                                    <div class="widget widget-nopad">
+                                        <div class="widget-header"> <i class="fa fa-area-chart"></i>
+                                            <h3> Fecha</h3>
+                                        </div>
+                                        
+                                        <div class="widget-content">
+                                            <div class="form-group">                                                
+                                                <b:dateTimePicker style="width: 100%" value="#{trmCT.trm.fecha}" mode="inline" show-time="false"></b:dateTimePicker>
+                                            </div>                                                
+                                        </div>
+                                     
+                                    </div>                                
+                                </b:column>
+
+                                <script type="text/javascript">
+                                    function start() {
+                                        PF('statusDialog').show();
+                                    }
+                                    function stop() {
+                                        PF('statusDialog').hide();
+                                    }
+                                </script>
+                                <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                    <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                </p:dialog>
+                            </h:form>-->
+                            
+                            <!--IMPRIMIR DESDE AQUI-->
+                            <b:container id="informe">
+                            <!-- Mes 1-->
+                            <p:column> 
+                                    <div class="textoCentrado">Informe de TRM</div>
+                            </p:column>
+                            <table class="tableInforme">
+                            <tr>
+                            <td>
+                            <b:column col-lg="12">
+                                <div class="widget contenedorPromedioMes">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3>Mes 1</h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioLista">
+                                                    <div align="right">
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td align="center">
+                                                                    <p:outputLabel value="Año"/>
+                                                                </td>
+                                                                <td align="center" style="width: 80px">
+                                                                    <p:inputMask value="#{trmCT.anio}" class="form-control" mask="9999" placeholder="2016">
+                                                                        <p:ajax event="keyup" listener="#{trmCT.buscartrm()}" update="DTTrm"/>
+                                                                        <p:ajax event="keyup" listener="#{trmCT.obtenerPromedioMes(1)}" update="promedioMes1Field"/>
+                                                                    </p:inputMask>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <p:outputLabel value="Mes"/>
+                                                                </td>
+                                                                <td align="center" style="width: 120px">
+                                                                    <h:selectOneMenu value="#{trmCT.mes}" class="form-control">
+                                                                        <p:ajax event="change" listener="#{trmCT.buscartrm()}" update="DTTrm"/>
+                                                                        <p:ajax event="change" listener="#{trmCT.obtenerPromedioMes(1)}" update="promedioMes1Field"/>
+                                                                        <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                                                        <f:selectItem itemLabel="Enero" itemValue="01"/>
+                                                                        <f:selectItem itemLabel="Febrero" itemValue="02"/>
+                                                                        <f:selectItem itemLabel="Marzo" itemValue="03"/>
+                                                                        <f:selectItem itemLabel="Abril" itemValue="04"/>
+                                                                        <f:selectItem itemLabel="Mayo" itemValue="05"/>
+                                                                        <f:selectItem itemLabel="Junio" itemValue="06"/>
+                                                                        <f:selectItem itemLabel="Julio" itemValue="07"/>
+                                                                        <f:selectItem itemLabel="Agosto" itemValue="08"/>
+                                                                        <f:selectItem itemLabel="Septiembre" itemValue="09"/>
+                                                                        <f:selectItem itemLabel="Octubre" itemValue="10"/>
+                                                                        <f:selectItem itemLabel="Noviembre" itemValue="11"/>
+                                                                        <f:selectItem itemLabel="Diciembre" itemValue="12"/>                                                                
+                                                                    </h:selectOneMenu>
+                                                                </td>
+                                                            </tr>
+                                                        </table>                                                       
+                                                        <br/>
+                                                    </div>
+                                                    <p:dataTable id="DTTrm" value="#{trmCT.listatrm}" var="trm" rows="31"
+                                                                 paginator="false"
+                                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                 rowsPerPageTemplate="5,10,15,31">
+                                                        <p:column headerText="Fecha" sortBy="#{trm.fecha}">
+                                                            <h:outputLabel value="#{trm.fecha}" />
+                                                        </p:column>
+                                                        <p:column headerText="Valor">
+                                                            <h:outputLabel value="#{trm.valor}"/>
+                                                        </p:column>                                                       
+                                                    </p:dataTable>
+                                                    <!-- Campo Promedio para el mes AÑADIDO-->
+                                                    <b:well class="colPromedio">
+                                                        <b:inputText id="promedioMes1Field" disabled="true" value="#{trmCT.promedioMes1}">
+                                                            
+                                                            <f:facet name="prepend">
+                                                                <h:outputText value="Promedio" />
+                                                            </f:facet>                                                     
+                                                        </b:inputText>
+                                                        
+                                                    </b:well>
+                                                </h:form>
+                                            </div>
+                                            <!-- /widget-content --> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                            <!-- /widget -->
+                            <!-- FIN Mes 1-->
+                            </td>
+                            <td>
+                            <!-- Mes 2-->
+                            <b:column col-lg="12" >
+                                <div class="widget contenedorPromedioMes">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3>Mes 2</h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioLista2">
+                                                    <div align="right">
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td align="center">
+                                                                    <p:outputLabel value="Año"/>
+                                                                </td>
+                                                                <td align="center" style="width: 80px">
+                                                                    <p:inputMask value="#{trmCT.anio}" class="form-control" mask="9999" placeholder="2016">
+                                                                        <p:ajax event="keyup" listener="#{trmCT.buscartrm()}" update="DTTrm"/>
+                                                                        <p:ajax event="keyup" listener="#{trmCT.obtenerPromedioMes(2)}" update="promedioMes2Field"/>
+                                                                    </p:inputMask>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <p:outputLabel value="Mes"/>
+                                                                </td>
+                                                                <td align="center" style="width: 120px">
+                                                                    <h:selectOneMenu value="#{trmCT.mes}" class="form-control">
+                                                                        <p:ajax event="change" listener="#{trmCT.buscartrm()}" update="DTTrm"/>
+                                                                        <p:ajax event="change" listener="#{trmCT.obtenerPromedioMes(2)}" update="promedioMes2Field"/>
+                                                                        <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                                                        <f:selectItem itemLabel="Enero" itemValue="01"/>
+                                                                        <f:selectItem itemLabel="Febrero" itemValue="02"/>
+                                                                        <f:selectItem itemLabel="Marzo" itemValue="03"/>
+                                                                        <f:selectItem itemLabel="Abril" itemValue="04"/>
+                                                                        <f:selectItem itemLabel="Mayo" itemValue="05"/>
+                                                                        <f:selectItem itemLabel="Junio" itemValue="06"/>
+                                                                        <f:selectItem itemLabel="Julio" itemValue="07"/>
+                                                                        <f:selectItem itemLabel="Agosto" itemValue="08"/>
+                                                                        <f:selectItem itemLabel="Septiembre" itemValue="09"/>
+                                                                        <f:selectItem itemLabel="Octubre" itemValue="10"/>
+                                                                        <f:selectItem itemLabel="Noviembre" itemValue="11"/>
+                                                                        <f:selectItem itemLabel="Diciembre" itemValue="12"/>                                                                
+                                                                    </h:selectOneMenu>
+                                                                </td>
+                                                            </tr>
+                                                        </table>                                                       
+                                                        <br/>
+                                                    </div>
+                                                    <p:dataTable id="DTTrm" value="#{trmCT.listatrm}" var="trm" rows="31"
+                                                                 paginator="false"
+                                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                 rowsPerPageTemplate="5,10,15,31">
+                                                        <p:column headerText="Fecha" sortBy="#{trm.fecha}">
+                                                            <h:outputLabel value="#{trm.fecha}" />
+                                                        </p:column>
+                                                        <p:column headerText="Valor">
+                                                            <h:outputLabel value="#{trm.valor}"/>
+                                                        </p:column>                                                       
+                                                    </p:dataTable>
+                                                    <!-- Campo Promedio para el mes AÑADIDO-->
+                                                    <b:well class="colPromedio">
+                                                        <b:inputText id="promedioMes2Field" disabled="true" value="#{trmCT.promedioMes2}">
+                                                            <f:facet name="prepend">
+                                                                <h:outputText value="Promedio" />
+                                                            </f:facet>                                                     
+                                                        </b:inputText>
+                                                    </b:well>
+                                                </h:form>
+                                            </div>
+                                            <!-- /widget-content --> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                            <!-- /widget -->
+                            <!-- FIN Mes 2-->
+                            </td>
+                            <td>
+                            <!-- Mes 3-->
+                            <b:column col-lg="12" >
+                                <div class="widget contenedorPromedioMes">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3>Mes 3</h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioLista3">
+                                                    <div align="right">
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td align="center">
+                                                                    <p:outputLabel value="Año"/>
+                                                                </td>
+                                                                <td align="center" style="width: 80px">
+                                                                    <p:inputMask value="#{trmCT.anio}" class="form-control" mask="9999" placeholder="2016">
+                                                                        <p:ajax event="keyup" listener="#{trmCT.buscartrm()}" update="DTTrm"/>
+                                                                        <p:ajax event="keyup" listener="#{trmCT.obtenerPromedioMes(3)}" update="promedioMes3Field"/>
+                                                                    </p:inputMask>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <p:outputLabel value="Mes"/>
+                                                                </td>
+                                                                <td align="center" style="width: 120px">
+                                                                    <h:selectOneMenu value="#{trmCT.mes}" class="form-control">
+                                                                        <p:ajax event="change" listener="#{trmCT.buscartrm()}" update="DTTrm"/>
+                                                                        <p:ajax event="change" listener="#{trmCT.obtenerPromedioMes(3)}" update="promedioMes3Field"/>
+                                                                        <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                                                        <f:selectItem itemLabel="Enero" itemValue="01"/>
+                                                                        <f:selectItem itemLabel="Febrero" itemValue="02"/>
+                                                                        <f:selectItem itemLabel="Marzo" itemValue="03"/>
+                                                                        <f:selectItem itemLabel="Abril" itemValue="04"/>
+                                                                        <f:selectItem itemLabel="Mayo" itemValue="05"/>
+                                                                        <f:selectItem itemLabel="Junio" itemValue="06"/>
+                                                                        <f:selectItem itemLabel="Julio" itemValue="07"/>
+                                                                        <f:selectItem itemLabel="Agosto" itemValue="08"/>
+                                                                        <f:selectItem itemLabel="Septiembre" itemValue="09"/>
+                                                                        <f:selectItem itemLabel="Octubre" itemValue="10"/>
+                                                                        <f:selectItem itemLabel="Noviembre" itemValue="11"/>
+                                                                        <f:selectItem itemLabel="Diciembre" itemValue="12"/>                                                                
+                                                                    </h:selectOneMenu>
+                                                                </td>
+                                                            </tr>
+                                                        </table>                                                       
+                                                        <br/>
+                                                    </div>
+                                                    <p:dataTable id="DTTrm" value="#{trmCT.listatrm}" var="trm" rows="31"
+                                                                 paginator="false"
+                                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                 rowsPerPageTemplate="5,10,15,31">
+                                                        <p:column headerText="Fecha" sortBy="#{trm.fecha}">
+                                                            <h:outputLabel value="#{trm.fecha}" />
+                                                        </p:column>
+                                                        <p:column headerText="Valor">
+                                                            <h:outputLabel value="#{trm.valor}"/>
+                                                        </p:column>                                                       
+                                                    </p:dataTable>
+                                                    <!-- Campo Promedio para el mes AÑADIDO-->
+                                                    <b:well class="colPromedio">
+                                                        <b:inputText id="promedioMes3Field" disabled="true" value="#{trmCT.promedioMes3}">
+                                                            <f:facet name="prepend">
+                                                                <h:outputText value="Promedio" />
+                                                            </f:facet>                                                     
+                                                        </b:inputText>
+                                                    </b:well>
+                                                </h:form>
+                                            </div>
+                                            <!-- /widget-content --> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                            <!-- /widget -->
+                            <!-- FIN Mes 3-->
+                              </td>
+                            </tr>
+                        </table>
+                             <b:well class="contentCalculoPromedioTrimestre col-lg-6">
+                                <p:commandButton value="Promedio Trimestre" id="withIcon" actionListener="#{trmCT.obtenerPromedioTrimestreSeleccionado()}" update="promedioTrimestreField" icon="ui-icon-calculator" class="botonCalcularPromedio pull-left" />
+                                <b:inputText id="promedioTrimestreField" disabled="true" value="#{trmCT.promedioTrimestreSel}"/>
+                             </b:well>
+                            
+                            
+                            </b:container> 
+                            <!--IMPRIMIR HASTA AQUI-->
+                              
+                        </b:row>
+                        <!-- /row --> 
+                        
+                       
+                        <!-- /container --> 
+                         <b:container class="pull-left contenedorGenerarInforme">
+                                    <!--<h3>Informe</h3>-->
+                                    <!--<b:inputText id="destinoInforme" value="" placeholder="Dirigido a"/>-->
+                                    <p:commandButton value="Imprimir" type="button" icon="ui-icon-print">
+                                        <p:printer target="informe" />
+                                    </p:commandButton>
+                        </b:container>
+                        
+                    </b:container>
+                
+                
+                
+                </div>
+                <!-- /main-inner --> 
+            </div>
+            <!-- /main -->           
+        </ui:define>
+
+    </ui:composition>
+
+
+</html>

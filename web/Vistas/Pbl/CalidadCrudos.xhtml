@@ -1,0 +1,268 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+        <ui:composition template="./../template.xhtml">
+            <ui:define name="content">
+                <div class="main">
+                    <div class="main-inner">
+                        <b:container fluid="true">
+                            <div style="margin-bottom: 30px">
+
+                            </div>
+                            <b:row>
+                                <b:column col-lg="6">
+                                    <div class="widget">
+                                        <div class="widget-header">
+                                            <i class="fa fa-send"/>
+                                            <h3>Registro de calidad de crudos</h3>
+                                        </div>
+                                        <div class="widget-content">
+                                            <div class="widget big-stats-container">
+                                                <div class="widget-content">
+                                                    <h:form id="formularioRegistro">
+                                                        <p:growl autoUpdate="true" showDetail="true"/>
+                                                        <div class="form-horizontal">
+
+                                                            <div class="form-group">
+                                                                <label for="inputAnio" class="control-label">Año:</label>
+                                                                <p:inputText value="#{calidadCrudoCT.calidadCrudo.anio}" id="inputAnio" class="form-control" placeholder="2016">
+                                                                    <p:ajax event="keyup" update="LTrimestreMes STrimestreMes"/>
+                                                                </p:inputText>                                                            
+                                                                <p:message for="inputAnio"/>                                                            
+                                                            </div>
+                                                            <c:choose>
+                                                                <c:when test="${calidadCrudoCT.calidadCrudo.anio >= 2012}">
+                                                                    <div class="form-group">  
+                                                                        <p:outputLabel id="LTrimestreMes" for="inputAnio" class="control-label" value="Seleccione Mes:"/>
+                                                                        <h:selectOneMenu id="STrimestreMes" class="form-control" value="#{calidadCrudoCT.calidadCrudo.trimestre_mes}" label="Selecciona el Mes: ">
+                                                                            <f:selectItem itemLabel="Enero" itemValue="1"/>
+                                                                            <f:selectItem itemLabel="Febrero" itemValue="2"/>
+                                                                            <f:selectItem itemLabel="Marzo" itemValue="3"/>
+                                                                            <f:selectItem itemLabel="Abril" itemValue="4"/>
+                                                                            <f:selectItem itemLabel="Mayo" itemValue="5"/>
+                                                                            <f:selectItem itemLabel="Junio" itemValue="6"/>
+                                                                            <f:selectItem itemLabel="Julio" itemValue="7"/>
+                                                                            <f:selectItem itemLabel="Agosto" itemValue="8"/>
+                                                                            <f:selectItem itemLabel="Septiembre" itemValue="9"/>
+                                                                            <f:selectItem itemLabel="Octubre" itemValue="10"/>
+                                                                            <f:selectItem itemLabel="Noviembre" itemValue="11"/>
+                                                                            <f:selectItem itemLabel="Diciembre" itemValue="12"/>
+                                                                        </h:selectOneMenu>
+                                                                        <h:message for="inputTrimestre"/>
+                                                                    </div>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <div  class="form-group">  
+                                                                        <p:outputLabel id="LTrimestreMes" for="inputAnio" class="control-label" value="Seleccione Trimestre:"/>
+                                                                        <h:selectOneMenu id="STrimestreMes" class="form-control" value="#{calidadCrudoCT.calidadCrudo.trimestre_mes}" label="Selecciona el Trimestre: ">
+                                                                            <f:selectItem itemLabel="1er Trimestre" itemValue="1"/>
+                                                                            <f:selectItem itemLabel="2do Trimestre" itemValue="2"/>
+                                                                            <f:selectItem itemLabel="3er Trimestre" itemValue="3"/>
+                                                                            <f:selectItem itemLabel="4to Trimestre" itemValue="4"/>
+                                                                        </h:selectOneMenu>
+                                                                        <h:message for="inputTrimestre"/>
+                                                                    </div>
+                                                                </c:otherwise>
+                                                            </c:choose>
+
+
+
+                                                            <hr/>
+                                                            <p align="left"><strong>Calidad de referencia</strong></p>
+                                                            <h:panelGrid columns="3"  width="100%">
+
+                                                                <h:outputLabel style="width: 98%" value=""/>
+                                                                <h:outputLabel style="width: 98%" value="Exportacion"/>
+                                                                <h:outputLabel style="width: 98%" value="Refinado"/>
+
+                                                                <h:outputLabel value="API"/>
+                                                                <p:inputText placeholder="0.00" value="#{calidadCrudoCT.calidadCrudo.calRefApiExportacion}" style="width: 98%" class="form-control"/>
+                                                                <p:inputText placeholder="0.00" value="#{calidadCrudoCT.calidadCrudo.calRefApiRefinado}" style="width: 98%" class="form-control"/>
+
+                                                                <h:outputLabel value="Azufre"/>
+                                                                <p:inputText placeholder="0.00" value="#{calidadCrudoCT.calidadCrudo.calRefAzufreExportacion}" style="width: 98%" class="form-control"/>
+                                                                <p:inputText placeholder="0.00" value="#{calidadCrudoCT.calidadCrudo.calRefAzufreRefinado}" style="width: 98%" class="form-control"/>
+
+                                                            </h:panelGrid>
+                                                            <hr/>
+                                                            <p align="left"><strong>Correcion</strong></p>
+                                                            <h:panelGrid columns="3"  width="100%">
+
+                                                                <h:outputLabel style="width: 98%" value=""/>
+                                                                <h:outputLabel style="width: 98%" value="Exportacion"/>
+                                                                <h:outputLabel style="width: 98%" value="Refinado"/>
+
+                                                                <h:outputLabel value="API"/>
+                                                                <p:inputText placeholder="0.00" style="width: 98%" value="#{calidadCrudoCT.calidadCrudo.corrRefApiExportacion}" class="form-control"/>
+                                                                <p:inputText placeholder="0.00" style="width: 98%" value="#{calidadCrudoCT.calidadCrudo.corrRefApiRefinado}" class="form-control"/>
+
+                                                                <h:outputLabel value="Azufre"/>
+                                                                <p:inputText placeholder="0.00" style="width: 98%" value="#{calidadCrudoCT.calidadCrudo.corrRefAzufreExportacion}" class="form-control"/>
+                                                                <p:inputText placeholder="0.00" style="width: 98%" value="#{calidadCrudoCT.calidadCrudo.corrRefAzufreRefinado}" class="form-control"/>
+
+
+                                                            </h:panelGrid>
+                                                            <hr/>
+                                                            <p align="left"><strong>Precio de referencia</strong></p>
+
+                                                            <h:panelGrid columns="2"  width="100%">
+
+                                                                <h:outputLabel style="width: 98%" value="Exportacion"/>
+                                                                <h:outputLabel style="width: 98%" value="Refinado"/>
+
+                                                                <p:inputText style="width: 98%" value="#{calidadCrudoCT.calidadCrudo.precioReferenciaExportacion}" placeholder="0.00" class="form-control"/>
+                                                                <p:inputText style="width: 98%" value="#{calidadCrudoCT.calidadCrudo.precioReferenciaRefinado}" placeholder="0.00" class="form-control"/>
+
+                                                            </h:panelGrid>
+                                                            <p:separator/>
+                                                            <div class="form-group" align="right">
+                                                                <h:panelGrid columns="2">
+                                                                    <p:commandButton id="Cancelar"  process="@this" 
+                                                                                     immediate="true" class="btn btn-info" 
+                                                                                     update=":formularioRegistro :formularioLista"
+                                                                                     action="#{calidadCrudoCT.cancelar()}"
+                                                                                     value="Cancelar" />
+
+
+                                                                    <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                                                     value="#{calidadCrudoCT.nombreOperacion}" 
+                                                                                     action="#{calidadCrudoCT.metodo()}" 
+                                                                                     update=":formularioRegistro :formularioLista"
+                                                                                     class="btn btn-success"/>                                                                                                                        
+                                                                </h:panelGrid>
+                                                            </div> 
+                                                        </div> 
+                                                        <script type="text/javascript">
+                                                            function start() {
+                                                                PF('statusDialog').show();
+                                                            }
+                                                            function stop() {
+                                                                PF('statusDialog').hide();
+                                                            }
+                                                        </script>
+                                                        <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                            <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                        </p:dialog>
+                                                    </h:form> 
+                                                </div>
+                                            </div>
+                                        </div>                                                
+                                    </div>
+
+                                </b:column>
+
+                                <b:column col-lg="12" >
+                                    <div class="widget ">
+                                        <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                            <h3> Listado de calidades </h3>
+                                        </div>
+                                        <!-- /widget-header -->
+                                        <div class="widget-content">
+                                            <div class="widget big-stats-container">
+                                                <div class="widget-content">
+                                                    <h:form id="formularioLista">
+                                                        <div align="right">
+                                                            <p:inputText class="form-control" placeholder="Buscar..." value="#{campoCT.buscar}" style="width: 50%">
+                                                                <p:ajax listener="#{campoCT.buscarCampo()}" update="DTCalidades" event="keyup"/>
+                                                            </p:inputText><br/>
+                                                        </div>
+                                                        <p:dataTable id="DTCalidades" value="#{calidadCrudoCT.calidadCrudos}" var="calidad"  
+                                                                     rows="10"
+                                                                     paginator="true"
+                                                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                     rowsPerPageTemplate="5,10,15"
+                                                                     emptyMessage="Calidad de crudos no registrada">
+                                                            <p:column headerText="CLRAPE" >
+                                                                <h:outputLabel value="#{calidad.calRefApiExportacion}"/>
+                                                            </p:column>
+
+                                                            <p:column headerText="CLRAPR" >
+                                                                <h:outputLabel value="#{calidad.calRefApiRefinado}"/>
+                                                            </p:column>
+
+                                                            <p:column headerText="CLAE" >
+                                                                <h:outputLabel value="#{calidad.calRefAzufreExportacion}"/>
+                                                            </p:column>
+
+                                                            <p:column headerText="ClRAR">
+                                                                <h:outputLabel value="#{calidad.calRefAzufreRefinado}"/>
+                                                            </p:column>  
+
+                                                            <p:column headerText="CRAPE" >
+                                                                <h:outputLabel value="#{calidad.corrRefApiExportacion}"/>
+                                                            </p:column>
+
+                                                            <p:column headerText="CRAPR" >
+                                                                <h:outputLabel value="#{calidad.corrRefApiRefinado}"/>
+                                                            </p:column>
+
+                                                            <p:column headerText="CRAE" >
+                                                                <h:outputLabel value="#{calidad.corrRefAzufreExportacion}"/>
+                                                            </p:column>
+
+                                                            <p:column headerText="CRAR" >
+                                                                <h:outputLabel value="#{calidad.corrRefAzufreRefinado}"/>
+                                                            </p:column>   
+
+                                                            <p:column headerText="PRE" >
+                                                                <h:outputLabel value="#{calidad.precioReferenciaExportacion}"/>
+                                                            </p:column>
+
+                                                            <p:column headerText="PRR" >
+                                                                <h:outputLabel value="#{calidad.precioReferenciaRefinado}"/>
+                                                            </p:column>
+
+                                                            <p:column headerText="Tr">
+                                                                <h:outputLabel value="#{calidad.trimestre_mes}"/>
+                                                            </p:column>
+
+                                                            <p:column headerText="Año" sortBy="#{calidad.anio}">
+                                                                <h:outputLabel value="#{calidad.anio}"/>
+                                                            </p:column>                                                       
+
+                                                            <p:column style="width: 50px">
+                                                                <p:commandLink style="color: white; width: 100%" process="@this" update=":formularioRegistro" action="#{calidadCrudoCT.seleccionarCRUD(1)}" title="Modificar" class="btn btn-block btn-info">
+                                                                    <f:setPropertyActionListener value="#{calidad}" target="#{calidadCrudoCT.calidadCrudo}"/>                                                               
+                                                                    <i class="fa fa-pencil"></i> 
+                                                                </p:commandLink>
+                                                            </p:column>
+                                                            <p:column style="width: 50px">
+                                                                <p:commandLink style="color: white; width: 100%" action="#{calidadCrudoCT.eliminar()}" onclick="PrimeFaces.monitorDownload(start, stop);" process="@this" update="@form" title="Eliminar" class="btn btn-block btn-danger">
+                                                                    <f:setPropertyActionListener value="#{calidad}" target="#{calidadCrudoCT.calidadCrudo}"/>
+                                                                    <i class="fa fa-trash"></i>                                                     
+                                                                </p:commandLink>
+                                                            </p:column>
+                                                        </p:dataTable>
+                                                        <script type="text/javascript">
+                                                            function start() {
+                                                                PF('statusDialog').show();
+                                                            }
+                                                            function stop() {
+                                                                PF('statusDialog').hide();
+                                                            }
+                                                        </script>
+                                                        <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                            <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                        </p:dialog>
+                                                    </h:form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </b:column>
+                            </b:row>
+                        </b:container>
+                    </div>
+                </div> 
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

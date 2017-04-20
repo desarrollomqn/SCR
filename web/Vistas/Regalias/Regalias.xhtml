@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../template.xhtml">
+            <ui:define name="content">
+                <div class="main">
+                    <div class="main-inner">
+                        <b:container fluid="true" >
+                            <b:row>
+                                <b:column col-lg="4">
+                                    <div class="widget ">
+                                        <div class="widget-header"> <i class="fa fa-list-ol"></i>
+                                            <h3> Registro de Produccion </h3>
+                                        </div>
+                                        <!-- /widget-header -->
+                                        <div class="widget-content">
+                                            <h:form id="formularioRegistro">
+                                                <p:growl showDetail="true" autoUpdate="true" life="3000"/>
+                                                <div class="widget big-stats-container">
+                                                    <div class="widget-content">
+                                                        <div class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label for="inputAnio" class="control-label">Año: </label>
+                                                                <h:inputText class="form-control" value="#{regaliasCT.anio}" id="inputValor">
+                                                                    <f:passThroughAttribute name="placeholder" value="2016"/>
+                                                                </h:inputText>                                                                
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="inputMes" class="control-label">Mes a calcular: </label>
+                                                                <h:selectOneMenu class="form-control" value="#{regaliasCT.mes}" >
+                                                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione Mes"/>
+                                                                    <f:selectItem itemLabel="Enero" itemValue="1"/>
+                                                                    <f:selectItem itemLabel="Febrero" itemValue="2"/>   
+                                                                    <f:selectItem itemLabel="Marzo" itemValue="3"/>   
+                                                                    <f:selectItem itemLabel="Abril" itemValue="4"/>   
+                                                                    <f:selectItem itemLabel="Mayo" itemValue="5"/>   
+                                                                    <f:selectItem itemLabel="Junio" itemValue="6"/>   
+                                                                    <f:selectItem itemLabel="Julio" itemValue="7"/>   
+                                                                    <f:selectItem itemLabel="Agosto" itemValue="8"/>   
+                                                                    <f:selectItem itemLabel="Septiembre" itemValue="9"/>   
+                                                                    <f:selectItem itemLabel="Octubre" itemValue="10"/>   
+                                                                    <f:selectItem itemLabel="Noviembre" itemValue="11"/>   
+                                                                    <f:selectItem itemLabel="Diciembre" itemValue="12"/>   
+                                                                </h:selectOneMenu>
+                                                            </div>                                                                                                                   
+
+                                                            <div class="form-group">
+                                                                <label class="control-label">Departamento: </label>
+                                                                <h:selectOneMenu class="form-control"  id="SMDepartamento" value="#{municipioCT.municipio.departamento.iddepartamento}">
+                                                                    <f:selectItem itemLabel="Seleccione Departamento" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{departamentoCT.departamentos}" var="departamento" itemLabel="#{departamento.nombre}" itemValue="#{departamento.iddepartamento}"/>
+                                                                    <p:ajax event="change" listener="#{municipioCT.cambioDepartamentos(municipioCT.municipio.departamento)}" update="SMMunicipio"/>
+                                                                </h:selectOneMenu>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label">Municipio: </label>
+                                                                <h:selectOneMenu class="form-control" id="SMMunicipio" value="#{regaliasCT.municipio.idmunicipio}">
+                                                                    <f:selectItem itemLabel="Seleccione Municipio" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{municipioCT.municipiosFiltrados}" var="municipio" itemLabel="#{municipio.nombre}" itemValue="#{municipio.idmunicipio}"/>
+                                                                </h:selectOneMenu>
+                                                            </div>
+                                                            <p:separator/>
+                                                            <p:commandButton icon="fa fa-send" onclick="PrimeFaces.monitorDownload(start, stop);" update=":formularioLista :formularioRegistro" action="#{regaliasCT.consultarCamposSegunMunicipio()}" value="Consultar" class="btn btn-info " style="float: right; width: 35%"/>
+                                                        </div>
+                                                        <!-- /widget-content --> 
+                                                    </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    function start() {
+                                                        PF('statusDialog').show();
+                                                    }
+                                                    function stop() {
+                                                        PF('statusDialog').hide();
+                                                    }
+                                                </script>
+                                                <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                    <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                </p:dialog>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </b:column>
+
+                                <b:column col-lg="8" >
+                                    <div class="widget " >
+                                        <div class="widget-header" > <i class="fa fa-list-ol"></i>
+                                            <h3> Registro de Producción </h3>
+                                        </div>
+                                        <div class="widget-content" >
+                                            <h:form id="formularioLista">
+                                                <div class="widget big-stats-container">
+                                                    <div class="widget-content">
+
+                                                        <p:dataTable value="#{regaliasCT.regalias}" var="item" class="order-table" emptyMessage="Sin contratos seleccionados">
+                                                            <p:column headerText="Contrato" style="width: 100px">
+                                                                <h:outputText value="#{item.contrato.nombre}"></h:outputText>
+                                                            </p:column>
+                                                            <p:column headerText="Campo" style="width: 100px">
+                                                                <h:outputText value="#{item.campo.nombre}"></h:outputText>
+                                                            </p:column>
+                                                            <p:column headerText="Volumen Promedio diario(P)">
+                                                                <div class="form-group">
+                                                                    <b:inputText value="#{item.produccion.produccionhdia}" placeholder="Volumen de Producción Hidrocarburos" span="12" class="ajuste-Campo"/> 
+                                                                </div>
+                                                            </p:column>
+                                                            <p:column headerText="Volumen Promedio diario(G)">
+                                                                <div class="form-group">
+                                                                    <b:inputText value="#{item.produccion.producciongdia}" placeholder="Volumen de Producción Gas" span="12" class="ajuste-Campo"/> 
+                                                                </div>
+                                                            </p:column>
+                                                        </p:dataTable>                                                     
+
+                                                        <p:separator/>
+                                                        <div class="form-group">
+                                                            <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" action="#{regaliasCT.calcularRegalias()}" icon="fa fa-send" update=":formularioLista" class=" btn btn-info" style="float: right; width: 25%" value="Calcular"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    function start() {
+                                                        PF('statusDialog').show();
+                                                    }
+                                                    function stop() {
+                                                        PF('statusDialog').hide();
+                                                    }
+                                                </script>
+                                                <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                    <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                </p:dialog>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </b:column>                              
+                                <!-- /widget -->
+                            </b:row>
+                            <!-- /row --> 
+                            <!-- /container --> 
+                        </b:container>
+                    </div>
+                    <!-- /main-inner --> 
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

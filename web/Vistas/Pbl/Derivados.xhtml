@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+                <div class="main">
+                    <b:container fluid="false">
+                        <div style="margin-bottom: 30px">
+
+                        </div>
+                        <b:row>
+                            <b:column col-lg="12">
+                                <div class="widget">
+                                    <div class="widget-header">
+
+                                    </div>
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioRegistro">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label for="inputAnio" class="control-label">Año:</label>
+                                                            <p:inputText value="#{ponderadoRefinacionCT.anio}" required="true" requiredMessage="Indique año" id="inputAnio" class="form-control" placeholder="2016">
+                                                            </p:inputText>                                                            
+                                                            <p:message for="inputAnio"/>                                                            
+                                                        </div>
+
+                                                        <div  class="form-group">  
+                                                            <p:outputLabel id="LTrimestreMes" for="inputAnio" class="control-label" value="Seleccione Trimestre:"/>
+                                                            <h:selectOneMenu id="STrimestreMes" class="form-control" value="#{ponderadoRefinacionCT.trimestremes}" label="Selecciona el Trimestre: ">
+                                                                <f:selectItem itemLabel="1er Trimestre" itemValue="1"/>
+                                                                <f:selectItem itemLabel="2do Trimestre" itemValue="2"/>
+                                                                <f:selectItem itemLabel="3er Trimestre" itemValue="3"/>
+                                                                <f:selectItem itemLabel="4to Trimestre" itemValue="4"/>
+                                                            </h:selectOneMenu>
+                                                            <h:message for="inputTrimestre"/>
+                                                        </div>
+
+                                                        <hr/>
+                                                        <h:dataTable width="100%" value="#{ponderadoRefinacionCT.ponderadosRegistro}" var="item">
+                                                            <h:column>
+                                                                <!-- column header -->
+                                                                <f:facet name="header">Derivado</f:facet>
+                                                                    #{item.derivado.nombre}                                                                
+                                                            </h:column>                                                            
+                                                            <h:column>
+                                                                <!-- column header -->
+                                                                <f:facet name="header">Produccion</f:facet>
+                                                                <p:inputText style="width: 95%" placeholder="Produccion" value="#{item.produccion}"/> 
+                                                            </h:column>
+                                                            <h:column>
+                                                                <!-- column header -->
+                                                                <f:facet name="header">NAL BPD</f:facet>
+                                                                <p:inputText style="width: 95%" placeholder="NAL BPD" value="#{item.nalbpd}"/>
+                                                            </h:column>
+                                                            <h:column>
+                                                                <!-- column header -->
+                                                                <f:facet name="header">EXP BPD</f:facet>
+                                                                <p:inputText style="width: 95%"  placeholder="EXP BPD" value="#{item.exportbpd}"/>
+                                                            </h:column>
+                                                            <h:column>
+                                                                <!-- column header -->
+                                                                <f:facet name="header">Precio nal</f:facet>
+                                                                <p:inputText style="width: 95%" placeholder="Produccion" value="#{item.precional}"/>                                                               
+                                                            </h:column>
+                                                            <h:column>
+                                                                <!-- column header -->
+                                                                <f:facet name="header">Precio exp</f:facet>
+                                                                <p:inputText style="width: 95%" placeholder="Produccion" value="#{item.precioexpo}"/>
+                                                            </h:column>                                                            
+                                                        </h:dataTable>
+                                                        <p:separator/>
+                                                        <div class="form-group" align="right">
+                                                            <h:panelGrid columns="2">
+                                                                <p:commandButton id="Cancelar"  process="@this"
+                                                                                 onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                                                 immediate="true" class="btn btn-info" 
+                                                                                 update=":formularioRegistro :formularioLista"
+                                                                                 action="#{ponderadoRefinacionCT.cancelar()}"
+                                                                                 value="Cancelar" />
+
+
+                                                                <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                                                 value="#{ponderadoRefinacionCT.nombreOperacion}" 
+                                                                                 action="#{ponderadoRefinacionCT.metodo()}" 
+                                                                                 update=":formularioRegistro :formularioLista"
+                                                                                 class="btn btn-success"/>                                                                                                                        
+                                                            </h:panelGrid>
+                                                        </div>
+                                                    </div>
+                                                    <script type="text/javascript">
+                                                        function start() {
+                                                            PF('statusDialog').show();
+                                                        }
+                                                        function stop() {
+                                                            PF('statusDialog').hide();
+                                                        }
+                                                    </script>
+                                                    <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                    </p:dialog>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>                            
+
+                            <b:column col-lg="12" >
+                                <div class="widget ">
+                                    <div class="widget-header"> <i class="fa fa-list-alt"></i>
+                                        <h3> Listado de valores </h3>
+                                    </div>
+                                    <!-- /widget-header -->
+                                    <div class="widget-content">
+                                        <div class="widget big-stats-container">
+                                            <div class="widget-content">
+                                                <h:form id="formularioLista">
+                                                    <div align="right">
+                                                        <p:inputText class="form-control" placeholder="Buscar..." style="width: 50%">
+                                                            <!--<p:ajax listener="#{campoCT.buscarCampo()}" update="DTPonderados" event="keyup"/>-->
+                                                        </p:inputText><br/>
+                                                    </div>
+                                                    <p:dataTable id="DTPonderados" value="#{ponderadoRefinacionCT.ponderados}" var="ponderado"  
+                                                                 rows="10"
+                                                                 paginator="true"
+                                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                 rowsPerPageTemplate="5,10,15"
+                                                                 emptyMessage="Valores no registrados">
+                                                        <p:column headerText="Derivado" >
+                                                            <h:outputLabel value="#{ponderado.derivado.nombre}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="Produccion" >
+                                                            <h:outputLabel value="#{ponderado.produccion}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="Rendimiento" >
+                                                            <h:outputLabel value="#{ponderado.rendimiento}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="Nal bpd">
+                                                            <h:outputLabel value="#{ponderado.nalbpd}"/>
+                                                        </p:column>  
+
+                                                        <p:column headerText="Expo bpd" >
+                                                            <h:outputLabel value="#{ponderado.exportbpd}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="Precio nal" >
+                                                            <h:outputLabel value="#{ponderado.precional}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="Precio exp" >
+                                                            <h:outputLabel value="#{ponderado.precioexpo}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="Precion medio" >
+                                                            <h:outputLabel value="#{ponderado.preciomedio}"/>
+                                                        </p:column>   
+
+                                                        <p:column headerText="Medio rdto" >
+                                                            <h:outputLabel value="#{ponderado.mediordto}"/>
+                                                        </p:column>     
+
+                                                        <p:column headerText="Trimestre" >
+                                                            <h:outputLabel value="#{ponderado.trimestremes}"/>
+                                                        </p:column>    
+
+                                                        <p:column headerText="anio" >
+                                                            <h:outputLabel value="#{ponderado.anio}"/>
+                                                        </p:column>    
+
+                                                        <p:column style="width: 50px">
+                                                            <p:commandLink style="color: white; width: 100%" process="@this" update=":formularioRegistro" action="#{ponderadoRefinacionCT.seleccionarCRUD(1)}" title="Modificar" class="btn btn-block btn-info">
+                                                                <f:setPropertyActionListener value="#{ponderado.anio}" target="#{ponderadoRefinacionCT.anio}"/> 
+                                                                <f:setPropertyActionListener value="#{ponderado.trimestremes}" target="#{ponderadoRefinacionCT.trimestremes}"/> 
+                                                                <p:confirm header="Confirmacion" message="Modificara todos los valores de los derivados de este trimestre y mes, esta seguro?" icon="ui-icon-alert" />
+                                                                <i class="fa fa-pencil"></i> 
+                                                            </p:commandLink>
+                                                        </p:column>
+                                                        <p:column style="width: 50px">
+                                                            <p:commandLink style="color: white; width: 100%" action="#{ponderadoRefinacionCT.eliminar()}" onclick="PrimeFaces.monitorDownload(start, stop);" process="@this" update="@form" title="Eliminar" class="btn btn-block btn-danger">
+                                                                <f:setPropertyActionListener value="#{ponderado.anio}" target="#{ponderadoRefinacionCT.anio}"/> 
+                                                                <f:setPropertyActionListener value="#{ponderado.trimestremes}" target="#{ponderadoRefinacionCT.trimestremes}"/>   
+                                                                <p:confirm header="Confirmacion" message="Eliminara todos los valores de los derivados de este trimestre y mes, esta seguro?" icon="ui-icon-alert" />
+                                                                <i class="fa fa-trash"></i>                                                     
+                                                            </p:commandLink>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                    <script type="text/javascript">
+                                                        function start() {
+                                                            PF('statusDialog').show();
+                                                        }
+                                                        function stop() {
+                                                            PF('statusDialog').hide();
+                                                        }
+                                                    </script>
+                                                    <p:dialog  modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                    </p:dialog>
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                        <p:commandButton value="si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                    </p:confirmDialog>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                        </b:row>
+                    </b:container>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

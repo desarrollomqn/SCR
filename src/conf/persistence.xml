@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="Sistema_SCRPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.planit.scr.modelos.Trm</class>
+    <class>com.planit.scr.modelos.Produccion</class>
+    <class>com.planit.scr.modelos.Contratos_1</class>
+    <class>com.planit.scr.modelos.Municipios_1</class>
+    <class>com.planit.scr.modelos.Departamentos_1</class>
+    <class>com.planit.scr.modelos.Tipos_1</class>
+    <class>com.planit.scr.modelos.Pbl</class>
+    <class>com.planit.scr.modelos.Valores</class>
+    <class>com.planit.scr.modelos.Regalias</class>
+    <class>com.planit.scr.modelos.Tipo</class>
+    <class>com.planit.scr.modelos.Campo</class>
+    <class>com.planit.scr.modelos.Contrato</class>
+    <class>com.planit.scr.modelos.Municipio</class>
+    <class>com.planit.scr.modelos.Departamento</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.100.251:5432/SCR"/>
+      <property name="javax.persistence.jdbc.password" value="yU7eywfXILoZjtaD "/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+    </properties>
+  </persistence-unit>
+</persistence>
